@@ -5,8 +5,10 @@ var Player = function() {
 	this.sprite = 'images/char-boy.png';
 };
 Player.prototype.update = function(dt){
+	this.isColliding();
 	this.x = this.col * 101;
 	this.y = this.row * 83 - 40;
+	
 };
 Player.prototype.handleInput = function(keyC){
 	switch(keyC){
@@ -35,9 +37,11 @@ Player.prototype.init = function(){
 };
 Player.prototype.isColliding = function(){
 	allEnemies.forEach(function(enemy) {
-		if(player.x 
+		if(player.col == enemy.col && player.row - 1 == enemy.lane){
+			enemy.speed = 0;
+		}
     });
-	return false;
+	return true;
 };
 var Enemy = function(lane) {
     // Variables applied to each of our instances go here,
@@ -45,6 +49,8 @@ var Enemy = function(lane) {
 
     // The image/sprite for our enemies, this uses
     // a helper we've provided to easily load images
+	this.lane = lane;
+	this.col = Math.round(this.x / 101);
 	this.speed = Math.floor((Math.random() * 200) + 50);
 	this.x = -101;
 	this.y = lane * 80 + 50;
@@ -55,9 +61,11 @@ var Enemy = function(lane) {
 // Parameter: dt, a time delta between ticks
 Enemy.prototype.update = function(dt) {
 	this.x += this.speed * dt;
+	this.col = Math.round(this.x / 101);
 	if(this.x > 505){
 		this.init();
 	}
+
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
