@@ -4,10 +4,31 @@ var Player = function() {
 	this.init();
 	this.sprite = 'images/char-boy.png';
 };
+
+var Score = function(){
+	this.lifes = "❤️❤️❤️";
+	this.wins = 0;
+};
+Score.prototype.render = function(){
+		ctx.fillStyle = '#3498db';
+		ctx.font = '20px Arial';
+		ctx.fillRect(0, 25, 505, 30);
+		
+		ctx.fillText(this.lifes,10,47); 
+
+		ctx.fillStyle = 'black';
+		ctx.fillText(`Score: ${this.wins}`,400,47); 	
+}
+var score = new Score();
 Player.prototype.update = function(dt){
 	this.isColliding();
 	this.x = this.col * 101;
 	this.y = this.row * 83 - 40;
+	
+	if(this.row == 0){
+		player.init();
+		score.wins++;
+	}
 	
 };
 Player.prototype.handleInput = function(keyC){
@@ -32,16 +53,14 @@ Player.prototype.render = function(){
 Player.prototype.init = function(){
 	this.col = 2;
 	this.row = 5;
-	this.x = this.col * 101;
-	this.y = this.row * 83;
 };
 Player.prototype.isColliding = function(){
 	allEnemies.forEach(function(enemy) {
 		if(player.col == enemy.col && player.row - 1 == enemy.lane){
-			enemy.speed = 0;
+			player.init();
+			score.lifes = score.lifes.replace('❤️', '');
 		}
     });
-	return true;
 };
 var Enemy = function(lane) {
     // Variables applied to each of our instances go here,
