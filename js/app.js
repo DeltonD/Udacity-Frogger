@@ -11,30 +11,30 @@ var Score = function(){
 	this.wins = 0;
 };
 Score.prototype.render = function(){
-		ctx.fillStyle = '#3498db';
-		ctx.font = '20px Arial';
-		ctx.fillRect(0, 25, 505, 30);
+	ctx.fillStyle = '#3498db';
+	ctx.font = '20px Arial';
+	ctx.fillRect(0, 25, 505, 30);
 		
-		ctx.fillText(this.lifes,10,47); 
+	ctx.fillText(this.lifes,10,47); 
 
+	ctx.fillStyle = 'black';
+	ctx.fillText(`Score: ${this.wins}`,400,47);
+		
+	if(loser){
+		ctx.fillStyle = 'white';
+		ctx.fillRect(0, 25, 505, 561);
+		
+		ctx.textAlign = 'center';
 		ctx.fillStyle = 'black';
-		ctx.fillText(`Score: ${this.wins}`,400,47);
+		ctx.fillText("You Lose 🙁",250,280);
+		ctx.fillText(`Scoring ${score.wins} points`,250,310);
 		
-		if(loser){
-			ctx.fillStyle = 'white';
-			ctx.fillRect(0, 25, 505, 561);
-		
-			ctx.textAlign = 'center';
-			ctx.fillStyle = 'black';
-			ctx.fillText("You Lose 🙁",250,280);
-			ctx.fillText(`Scoring ${score.wins} points`,250,310);
-		
-			ctx.fillStyle = '#3498db';
-			ctx.fillRect(150, 320, 200, 50);
-			ctx.fillStyle = 'black';
-			ctx.fillText("Restart ⟳",250,350);
-			ctx.textAlign = 'left';
-		}
+		ctx.fillStyle = '#3498db';
+		ctx.fillRect(150, 320, 200, 50);
+		ctx.fillStyle = 'black';
+		ctx.fillText("Restart ⟳",250,350);
+		ctx.textAlign = 'left';
+	}
 }
 Score.prototype.init = function(){
 	this.lifes = "❤️❤️❤️";
