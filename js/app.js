@@ -47,7 +47,6 @@ var score = new Score();
 * The .update function deal with the player position and if it is on the first row, the player wins and the score is incremented
 * The next function handles the input, for each direction the row or the column is changed
 * The .init function restarts the player position
-* .isColliding checks if the player is colliding with a enemy by checking if they are on the same column and row, if so, the player is reseted and one life is decreased from the score
 */
 var Player = function() {
 	this.init();
@@ -55,15 +54,8 @@ var Player = function() {
 };
 
 Player.prototype.update = function(dt){
-	this.isColliding();
 	this.x = this.col * 101;
-	this.y = this.row * 83 - 40;
-	
-	if(this.row == 0){
-		player.init();
-		score.wins++;
-	}
-	
+	this.y = this.row * 83 - 40;	
 };
 Player.prototype.handleInput = function(keyC){
 	switch(keyC){
@@ -88,16 +80,7 @@ Player.prototype.init = function(){
 	this.col = 2;
 	this.row = 5;
 };
-Player.prototype.isColliding = function(){
-	allEnemies.forEach(function(enemy) {
-		if(player.col == enemy.col && player.row - 1 == enemy.lane){
-			player.init();
-			if((score.lifes = score.lifes.replace('❤️', '')).length == 0){
-				loser = true;
-			}
-		}
-    });
-};
+
 
 /*
 * Defines the Enemy Object

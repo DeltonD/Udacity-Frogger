@@ -79,9 +79,24 @@ var Engine = (function(global) {
      */
     function update(dt) {
         updateEntities(dt);
-        // checkCollisions();
+        checkCollisions();
     }
-
+	
+	// Checks if the player is colliding with a enemy by checking if they are on the same column and row, if so, the player is reseted and one life is decreased from the score
+	function checkCollisions(){
+		allEnemies.forEach(function(enemy) {
+			if(player.col == enemy.col && player.row - 1 == enemy.lane){
+				player.init();
+				if((score.lifes = score.lifes.replace('❤️', '')).length == 0){
+					loser = true;
+				}
+			}
+			if(player.row == 0){
+				player.init();
+				score.wins++;
+			}
+		});
+	}
     /* This is called by the update function and loops through all of the
      * objects within your allEnemies array as defined in app.js and calls
      * their update() methods. It will then call the update function for your
